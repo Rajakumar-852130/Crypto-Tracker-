@@ -1,17 +1,19 @@
-package com.example.demo.model;
+package com.CryptoTracker.model;
 
 
 public class CryptoCoin {
     private String id;
     private String name;
+    private String imageUrl;
     private double price;
     private double change24h;
 
     // Constructors
     public CryptoCoin() {}
-    public CryptoCoin(String id, String name, double price, double change24h) {
+    public CryptoCoin(String id, String name, String imageUrl, double price, double change24h) {
         this.id = id;
         this.name = name;
+        this.imageUrl = imageUrl;
         this.price = price;
         this.change24h = change24h;
     }
@@ -21,6 +23,8 @@ public class CryptoCoin {
     public void setId(String id) { this.id = id; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
     public double getChange24h() { return change24h; }

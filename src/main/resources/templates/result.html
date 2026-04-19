@@ -56,14 +56,14 @@
 <nav class="navbar navbar-light bg-white shadow-sm py-3">
     <div class="container d-flex align-items-center">
         <a class="navbar-brand d-flex align-items-center" href="/">
-            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="logo">
+            <img src="/logo.png" alt="logo">
             <span class="fw-bold fs-4">CryptoTracker</span>
         </a>
 
         <ul class="nav">
             <li class="nav-item"><a class="nav-link fw-semibold" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link fw-semibold" href="#">Market</a></li>
-             <li class="nav-item"><a class="nav-link fw-semibold" href="#">Alerts</a></li>
+            <li class="nav-item"><a class="nav-link fw-semibold" href="/market">Market</a></li>
+             <li class="nav-item"><a class="nav-link fw-semibold" href="/alerts">🔔 Alerts</a></li>
         </ul>
     </div>
 </nav>
@@ -74,23 +74,43 @@
 
         <h2 class="text-center mb-4"><i class="fa-solid fa-coins"></i> Live Crypto Prices</h2>
 
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered align-middle">
             <thead class="table-light">
             <tr>
                 <th>Coins</th>
-                <th>Price (USD)</th>
-                <th>24h Change (%)</th>
+                <th>Price</th>
+                <th>24h Change</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="coin : ${coins}">
-                <td th:text="${coin.name}" class="fw-bold"></td>
+                <td>
+                    <img th:if="${coin.imageUrl != null and coin.imageUrl != ''}" th:src="${coin.imageUrl}" width="35" height="35" class="me-2 rounded-circle" alt="logo">
+                    <span th:text="${coin.name}" class="fw-bold text-capitalize"></span>
+                </td>
 
-                <td th:text="${coin.price}"></td>
+                <td class="fw-semibold">
+                    <span th:if="${currency == 'usd'}">$</span>
+                    <span th:if="${currency == 'inr'}">₹</span>
+                    <span th:if="${currency == 'eur'}">€</span>
+                    <span th:if="${currency == 'gbp'}">£</span>
+                    <span th:if="${currency == 'jpy' or currency == 'cny'}">¥</span>
+                    <span th:if="${currency == 'aud'}">A$</span>
+                    <span th:if="${currency == 'cad'}">C$</span>
+                    <span th:if="${currency == 'chf'}">CHF</span>
+                    <span th:if="${currency == 'sek' or currency == 'nok'}">kr</span>
+                    <span th:if="${currency == 'nzd'}">NZ$</span>
+                    <span th:if="${currency == 'mxn'}">$</span>
+                    <span th:if="${currency == 'sgd'}">S$</span>
+                    <span th:if="${currency == 'hkd'}">HK$</span>
+                    <span th:if="${currency == 'krw'}">₩</span>
+                    <span th:text="${coin.price}"></span>
+                </td>
 
-                <td th:text="${coin.change24h}"
-                    th:classappend="${coin.change24h >= 0} ? 'green' : 'red'">
+                <td th:class="${coin.change24h >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold'}">
+                    <i th:class="${coin.change24h >= 0 ? 'fa-solid fa-arrow-trend-up' : 'fa-solid fa-arrow-trend-down'}"></i>
+                    <span th:text="${#numbers.formatDecimal(coin.change24h, 1, 2)} + '%'">0.00%</span>
                 </td>
             </tr>
             </tbody>
